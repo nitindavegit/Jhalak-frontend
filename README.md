@@ -71,8 +71,8 @@ jhalak-frontend/
 
 ### Installation
 ```bash
-git clone <repo-url>
-cd <repo-directory>
+git clone https://github.com/nitindavegit/Jhalak-frontend.git
+cd jhalak-frontend
 npm install
 ```
 
