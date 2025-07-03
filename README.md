@@ -30,7 +30,7 @@
 ## 🖥️ Demo
 
 <!-- If deployed, add your live link below -->
-[Live Demo »](https://jhalak-404nf.netlify.app/)
+[Live Demo »](https://jhalak-cultural-personality.netlify.app/))
 
 ---
 
@@ -46,17 +46,19 @@
 ## 📂 Project Structure
 
 ```
+jhalak-frontend/
+├── public/                # Static assets (images, backgrounds, avatars)
 ├── src/
-│   ├── components/         # React components (quiz, results, auth, UI)
-│   ├── assets/             # Images and static assets
-│   ├── Firebase.jsx        # Firebase config
-│   └── App.jsx             # Main app logic
-├── constant/
-│   ├── characters.js       # Cultural archetype data
-│   └── questions.json      # Quiz questions
-├── public/                 # Static backgrounds, avatars
-├── index.html
-└── package.json
+│   ├── assets/            # App-specific images/logos
+│   ├── components/        # React components (e.g., Character.jsx, Personality.jsx)
+│   ├── services/          # API service (e.g., apiService.js)
+│   ├── App.jsx            # Main React app
+│   ├── main.jsx           # Entry point
+│   └── index.css          # Global styles
+├── constant/              # Static JS/JSON data (e.g., characters.js)
+├── package.json           # Project config and dependencies
+├── vite.config.js         # Vite build config
+└── .gitignore             # Git ignore rules
 ```
 
 ---
