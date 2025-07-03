@@ -29,3 +29,11 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+@layer base {
+    html,
+    :host {
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+}

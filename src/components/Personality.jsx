@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { CULTURE_PROFILES } from '../../constant/characters'
 import Character from './Character'
 import FactsSection from './FactsSection'
 import TraitsSection from './TraitsSection'
@@ -7,37 +6,59 @@ import { ArrowBigLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const Personality = () => {
-  const navigate = useNavigate()
-  const [randomResult, setRandomResult] = useState(null)
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-
-    // Pick a random index
-    const randomIndex = Math.floor(Math.random() * CULTURE_PROFILES.length);
-    const selected = CULTURE_PROFILES[randomIndex];
-
-    const formattedData = {
-      cultural_match: selected.cultural_match, // use the string, not the index
-      confidence: Math.random().toFixed(2), // Optional confidence placeholder
-      key_traits: selected.core_traits,
-      reasoning: "",
-      advice: selected.advice,
-      facts: selected.facts,
-      core_traits: selected.core_traits,
-      visual_theme: selected.visual_theme,
+    window.scrollTo(0, 0);
+    const cachedResults = localStorage.getItem('quizResults');
+    if (cachedResults) {
+      setProfile(JSON.parse(cachedResults));
     }
+  }, []);
 
-    setRandomResult(formattedData)
-  }, [])
-
-  if (!randomResult) return <div className='p-4 text-center'>Loading...</div>
+  if (!profile) return <div className='p-4 text-center'>No personality result found.</div>;
 
   return (
     <div className='w-[100%]'>
-      <Character result={randomResult} />
-      <FactsSection result={randomResult} />
-      <TraitsSection result={randomResult} />
+      {/* Character, Cultural Match, and Confidence (overlay style) */}
+      <Character result={profile} />
+
+      {/* 3. Facts */}
+      <FactsSection result={{ facts: profile.facts }} />
+
+      {/* 4. Key Traits */}
+      {profile.key_traits && (
+        <div className="w-[80%] mx-auto flex flex-col items-center mt-[2rem]">
+          <h2 className="bungee-regular text-[2rem] text-amber-100 mb-4">Key Traits</h2>
+          <ul className="flex flex-wrap gap-4 justify-center">
+            {profile.key_traits.map((trait, idx) => (
+              <li key={idx} className="bg-neutral-800 text-amber-100 px-4 py-2 rounded-2xl text-lg font-semibold raleway shadow">
+                {trait}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* 5. Core Traits and 6. Visual Motifs */}
+      <TraitsSection result={{ core_traits: profile.core_traits, visual_theme: { motifs: profile.motifs } }} />
+
+      {/* 7. Reasoning */}
+      {profile.reasoning && (
+        <div className="w-[80%] mx-auto mt-10 mb-6 p-6 bg-neutral-900 rounded-2xl shadow">
+          <h2 className="bungee-regular text-[2rem] text-amber-100 mb-2">Reasoning</h2>
+          <p className="raleway text-lg text-amber-100">{profile.reasoning}</p>
+        </div>
+      )}
+
+      {/* 8. Advice */}
+      {profile.advice && (
+        <div className="w-[80%] mx-auto mb-10 p-6 bg-neutral-800 rounded-2xl shadow">
+          <h2 className="bungee-regular text-[2rem] text-amber-200 mb-2">Advice</h2>
+          <p className="raleway text-lg text-amber-100">{profile.advice}</p>
+        </div>
+      )}
 
       <div className='flex justify-center mb-[4rem]'>
         <button

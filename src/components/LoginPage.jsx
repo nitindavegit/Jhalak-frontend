@@ -17,6 +17,8 @@ const LoginPage = () => {
       setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      const idToken = await user.getIdToken();
+      localStorage.setItem('token', idToken);
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('userEmail', user.email);
       localStorage.setItem('userName', user.displayName);
@@ -36,12 +38,22 @@ const LoginPage = () => {
     }
     try {
       setIsLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const idToken = await userCredential.user.getIdToken();
+      localStorage.setItem('token', idToken);
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('userEmail', email);
       navigate('/questions');
     } catch (error) {
-      setErrorMsg('Email/Password Sign-In failed');
+      if (
+        error.code === 'auth/wrong-password' ||
+        error.code === 'auth/user-not-found' ||
+        error.code === 'auth/invalid-credential'
+      ) {
+        setErrorMsg('Incorrect email or password. Please try again.');
+      } else {
+        setErrorMsg('Email/Password Sign-In failed');
+      }
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -50,6 +62,11 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-amber-100">
+      {(isLoading) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+        </div>
+      )}
       <div className="bg-neutral-700 p-8 rounded-xl shadow-xl w-96">
         <h2 className="text-white text-2xl font-bold mb-4 text-center">Login</h2>
         {errorMsg && (
@@ -60,7 +77,7 @@ const LoginPage = () => {
         <button
           onClick={handleGoogleSignIn}
           disabled={isLoading}
-          className="w-full bg-white text-black py-2 rounded mb-4 hover:bg-gray-200"
+          className="w-full bg-white text-black py-2 rounded mb-4 hover:bg-gray-200 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {isLoading ? 'Signing in...' : 'Continue with Google'}
         </button>
@@ -86,6 +103,7 @@ const LoginPage = () => {
             type="button"
             className="absolute right-3 top-2.5 text-gray-400"
             onClick={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
@@ -93,7 +111,7 @@ const LoginPage = () => {
         <button
           onClick={handleSignIn}
           disabled={isLoading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {isLoading ? 'Logging in...' : 'Login'}
         </button>

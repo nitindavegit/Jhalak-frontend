@@ -18,46 +18,56 @@ const Character = ({result}) => {
     }, []);
 
 
-    useGSAP(()=>{
-        const titleSplit = new SplitText('.cultural-match',{type :'chars, words'});
-        const resultSplit = new SplitText('.cultural-match-result',{type :'chars, words'});
+    useGSAP(() => {
+        if (!result) return;
+        document.fonts.ready.then(() => {
+            const titleSplit = new SplitText('.cultural-match', { type: 'chars, words' });
+            const resultSplit = new SplitText('.cultural-match-result', { type: 'chars, words' });
 
-        gsap.from(titleSplit.chars , {
-            opacity:0,
-            yPercent :100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.05
-        })
+            if (titleSplit.chars.length) {
+                gsap.from(titleSplit.chars, {
+                    opacity: 0,
+                    yPercent: 100,
+                    duration: 1.8,
+                    ease: 'expo.out',
+                    stagger: 0.05
+                });
+            }
 
-        gsap.from(resultSplit.chars ,{
-            opacity:0,
-            yPercent:100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.06,
-            delay:1
-        })
+            if (resultSplit.chars.length) {
+                gsap.from(resultSplit.chars, {
+                    opacity: 0,
+                    yPercent: 100,
+                    duration: 1.8,
+                    ease: 'expo.out',
+                    stagger: 0.06,
+                    delay: 1
+                });
+            }
 
-        gsap.from('.avatar',{
-            opacity:0,
-            xPercent:100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.06,
-            delay:1
-        })
+            if (document.querySelector('.avatar')) {
+                gsap.from('.avatar', {
+                    opacity: 0,
+                    xPercent: 100,
+                    duration: 1.8,
+                    ease: 'expo.out',
+                    stagger: 0.06,
+                    delay: 1
+                });
+            }
 
-        gsap.from('.key-traits',{
-            opacity:0,
-            xPercent:-100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.06,
-            delay:2
-        })
-
-    })
+            if (document.querySelector('.key-traits')) {
+                gsap.from('.key-traits', {
+                    opacity: 0,
+                    xPercent: -100,
+                    duration: 1.8,
+                    ease: 'expo.out',
+                    stagger: 0.06,
+                    delay: 2
+                });
+            }
+        });
+    }, [result]);
 
     const getRandomRGBA = () => {
         const r = Math.floor(Math.random() * 256);
@@ -131,14 +141,24 @@ const Character = ({result}) => {
         </div>
 
         <div className='avatar absolute top-[25rem] hidden lg:block  left-[50rem] scale-200 '>
-        <img src={getAvatarFile(result.cultural_match)} alt={result.cultural_match} className="h-[35rem]" />
-
+        <img
+          src={getAvatarFile(result.cultural_match)}
+          alt={result.cultural_match}
+          style={{
+            maxHeight: '35rem',
+            maxWidth: '100%',
+            height: 'auto',
+            width: 'auto',
+            imageRendering: 'auto',
+          }}
+          className="rounded-xl shadow-lg"
+        />
         </div>
 
         <div className="key-traits lg:mt-[13rem] mt-[2rem]  lg:ml-[5%] ml-[25%] bg-amber-100/40 min-w-[45%] max-w-[47%]  text-neutral-800 px-[1rem] py-[3rem] items-center flex flex-col rounded-3xl hover:bg-amber-100/80 transition-colors duration-300 cursor-pointer ">
-            <h2 className="bungee-regular text-[2rem]  mb-2">Key Traits:</h2>
+            <h2 className="bungee-regular text-[2rem]  mb-2">Core Traits:</h2>
             <ul className="  grid lg:grid-cols-3 gap-[1.5rem]">
-                {result.key_traits.map((trait, index) => (
+                {(result.core_traits || []).map((trait, index) => (
                 <li key={index} className="text-lg whitespace-nowrap text-amber-100 bg-neutral-800 rounded-2xl px-[1rem]   py-2 raleway">{trait}</li>
                 ))}
             </ul>

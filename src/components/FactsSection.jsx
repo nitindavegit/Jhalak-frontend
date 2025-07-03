@@ -15,11 +15,15 @@ const FactsSection = ({ result }) => {
             <h1 className='bungee-regular text-[4rem]'>Facts</h1>
 
             <div className='grid md:grid-cols-2 gap-[3rem] mt-[2rem]  cursor-pointer'>
-                {result.facts.map((fact, index) => (
-                    <SpotlightCard spotlightColor={getRandomRGBA()} key={index} className='w-[300px] h-[250px]'>
-                        <p className='raleway text-lg leading-8'>{fact}</p>
-                    </SpotlightCard>
-                ))}
+                {result && Array.isArray(result.facts) ? (
+                    result.facts.map((fact, index) => (
+                        <SpotlightCard spotlightColor={getRandomRGBA()} key={index} className='w-[300px] h-[250px]'>
+                            <p className='raleway text-lg leading-8'>{fact}</p>
+                        </SpotlightCard>
+                    ))
+                ) : (
+                    <p className='text-white'>No facts available.</p>
+                )}
             </div>
         </div>
     )

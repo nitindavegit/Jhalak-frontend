@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-  const user = auth.currentUser;
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  if (!user && !isAuthenticated) {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsLoading(false);
+      setIsAuthenticated(!!user);
+      if (user) {
+        localStorage.setItem('isAuthenticated', 'true');
+      } else {
+        localStorage.removeItem('isAuthenticated');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any loading spinner component
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
