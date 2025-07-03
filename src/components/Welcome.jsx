@@ -31,7 +31,7 @@ const Welcome = () => {
           />
 
           <div className='absolute left-[15%] right-[15%]  top-1/4 flex flex-col gap-[2rem]'>
-            <p className='bungee-regular  text-center text-[4rem]'>
+            <p className='bungee-regular  text-center text-[2.5rem] md:text-[4rem]'>
               Ancient Roots.<br /> Modern Personality.
             </p>
             <p className=' hidden lg:block w-[60%] self-center  text-center text-2xl bg-neutral-600 p-2 rounded-full text-white'>
@@ -74,7 +74,7 @@ const Welcome = () => {
 
       {/* Culture Cards Section */}
       <div className="characters bg-black w-[80%] mx-auto flex flex-col items-center mb-[4rem] mt-[6rem]">
-        <h1 className='bungee-regular text-[4.2rem]'>Cultural Echoes: <span className='text-4xl raleway'>Which Legacy Shapes You?</span></h1>
+        <h1 className='bungee-regular text-[2.5rem] md:text-[4.2rem]'>Cultural Echoes: <span className='text-4xl raleway'>Which Legacy Shapes You?</span></h1>
         <h2 className='raleway text-3xl text-white font-semibold mt-[1.5rem]'>Discover the ancient soul within.</h2>
         <p className='raleway hidden md:block text-neutral-600 text-center mx-[8rem] text-lg mt-3'>
           These timeless civilizations reflect the diverse strengths in each of us—boldness, harmony, intellect, creativity, and spiritual depth. Which culture mirrors your inner compass?

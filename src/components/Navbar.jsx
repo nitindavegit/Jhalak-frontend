@@ -44,18 +44,10 @@ const Navbar = () => {
       <NavLink to="/">
         <img src={logo} alt="Logo"  className=" cursor-pointer h-[50px]  w-[50px] ml-[2rem] scale-200 " />
       </NavLink>
+      <div className='flex space-x-[0.5rem]'>
       {isAuthenticated ? (
         <div className="flex items-center gap-4 mr-8">
-          <div>
-          <button
-              onClick={handleClick}
-              className='flex gap-2 md:hidden self-center cursor-pointer bg-[#f5f5dc]  text-black font-semibold raleway pl-3 py-3 pr-5 rounded-2xl hover:bg-amber-200 hover:scale-110 transition-all duration-500'
-            >
-              Get Started
-              <ArrowBigRight />
-            </button>
-          </div>
-          <div className="relative group hidden md:block">
+          <div className="relative group flex items-center">
             <img
               src={userPhoto || logo}
               alt="User Avatar"
@@ -67,19 +59,29 @@ const Navbar = () => {
           </div>
           <button
             onClick={handleLogout}
-            className=" items-center hidden md:flex gap-1 bg-neutral-800 text-white px-3 py-2 rounded-lg hover:bg-red-600 hover:scale-105 transition-all duration-200"
+            className="items-center flex gap-1 bg-neutral-800 text-white px-3 py-2 rounded-lg hover:bg-red-600 hover:scale-105 transition-all duration-200"
           >
             <LogOut size={18} /> Logout
           </button>
         </div>
       ) : (
-        <button
-          onClick={() => navigate('/auth')}
-          className="bg-blue-600 hidden md:block text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition-all duration-200 mr-8"
-        >
-          Sign In
-        </button>
+        <>
+          <button
+            onClick={handleClick}
+            className='flex gap-2 md:hidden self-center cursor-pointer bg-[#f5f5dc]  text-black font-semibold raleway pl-3 py-3 pr-5 rounded-2xl hover:bg-amber-200 hover:scale-110 transition-all duration-500'
+          >
+            Get Started
+            <ArrowBigRight />
+          </button>
+          <button
+            onClick={() => navigate('/auth')}
+            className="bg-blue-600 hidden md:block text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition-all duration-200 mr-8"
+          >
+            Sign In
+          </button>
+        </>
       )}
+      </div>
     </div>
   );
 };
