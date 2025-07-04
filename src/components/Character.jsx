@@ -140,13 +140,13 @@ const Character = ({result}) => {
             
         </div>
 
-        <div className='avatar absolute top-[25rem] hidden lg:block  left-[50rem] scale-200 '>
+        <div className='avatar absolute top-[18rem] left-1/2 transform -translate-x-1/2 md:top-[20rem] md:left-[60%] md:scale-150 lg:top-[25rem] lg:left-[50rem] lg:scale-200 transition-all duration-500'>
         <img
           src={getAvatarFile(result.cultural_match)}
           alt={result.cultural_match}
           style={{
-            maxHeight: '35rem',
-            maxWidth: '100%',
+            maxHeight: '20rem',
+            maxWidth: '80vw',
             height: 'auto',
             width: 'auto',
             imageRendering: 'auto',
