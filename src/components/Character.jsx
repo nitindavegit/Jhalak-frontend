@@ -120,7 +120,7 @@ const Character = ({result}) => {
   return (
     
     <div>
-        <div className='relative h-[100vh]'>
+        <div className='relative overflow-hidden h-[100vh]'>
     <div className={`w-[100vw] bg-no-repeat bg-cover h-[100vh] z-0 absolute top-0 rounded-lg`}
     style={{
         backgroundImage: `url(/${getBackgroundFile(result.cultural_match)})`
@@ -140,8 +140,7 @@ const Character = ({result}) => {
             
         </div>
 
-        {/* FIX: Avatar always visible and centered at all breakpoints */}
-        <div className='avatar absolute z-10 top-[8rem] left-1/2 transform -translate-x-1/2 sm:top-[10rem] md:top-[12rem] md:scale-125 lg:top-[14rem] lg:scale-150 transition-all duration-500'>
+        <div className='avatar absolute top-[18rem] left-1/2 transform -translate-x-1/2 md:top-[20rem] md:left-[60%] md:scale-150 lg:top-[25rem] lg:left-[50rem] lg:scale-200 transition-all duration-500'>
         <img
           src={getAvatarFile(result.cultural_match)}
           alt={result.cultural_match}
